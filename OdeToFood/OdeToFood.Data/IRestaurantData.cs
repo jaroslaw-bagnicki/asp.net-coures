@@ -7,6 +7,7 @@ namespace OdeToFood.Data
     public interface IRestaurantData
     {
         IEnumerable<Restaurant> GetAll();
+        IEnumerable<Restaurant> GetByName(string term);
     }
 
     public class InMemoryRestaurantData : IRestaurantData
@@ -18,7 +19,7 @@ namespace OdeToFood.Data
             restaurants = new List<Restaurant>
             {
                 new Restaurant {Id = 1, Name = "Scott's Pizza", Location = "Maryland", Cuisine = CuisineType.Italian },
-                new Restaurant {Id = 2, Name = "Scott's Pizza", Location = "Cinnamon Club", Cuisine = CuisineType.Indian },
+                new Restaurant {Id = 2, Name = "Cinnamon Club", Location = "London", Cuisine = CuisineType.Indian },
                 new Restaurant {Id = 3, Name = "La Costa", Location = "California", Cuisine = CuisineType.Mexican },
             };
         }
@@ -27,6 +28,15 @@ namespace OdeToFood.Data
         {
             return from r in restaurants
                 orderby r.Name
+                select r;
+        }
+
+        public IEnumerable<Restaurant> GetByName(string term = "")
+        {
+            var normalizeTerm = term.ToLowerInvariant();
+            return from r in restaurants
+                where r.Name.ToLowerInvariant().Contains(normalizeTerm)
+                orderby r.Name 
                 select r;
         }
     }
