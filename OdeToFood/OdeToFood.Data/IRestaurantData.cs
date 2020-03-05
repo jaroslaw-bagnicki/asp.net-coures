@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using OdeToFood.Core;
 
 namespace OdeToFood.Data
@@ -7,7 +8,8 @@ namespace OdeToFood.Data
     public interface IRestaurantData
     {
         IEnumerable<Restaurant> GetAll();
-        IEnumerable<Restaurant> GetByName(string term);
+        IEnumerable<Restaurant> FilterByName(string term);
+        Restaurant GetById(int id);
     }
 
     public class InMemoryRestaurantData : IRestaurantData
@@ -31,13 +33,20 @@ namespace OdeToFood.Data
                 select r;
         }
 
-        public IEnumerable<Restaurant> GetByName(string term = "")
+        public IEnumerable<Restaurant> FilterByName(string term = "")
         {
             var normalizeTerm = term.ToLowerInvariant();
             return from r in restaurants
                 where r.Name.ToLowerInvariant().Contains(normalizeTerm)
                 orderby r.Name 
                 select r;
+        }
+
+        public Restaurant GetById(int id)
+        {
+            return (from r in restaurants
+                where r.Id == id
+                select r).First();
         }
     }
 }

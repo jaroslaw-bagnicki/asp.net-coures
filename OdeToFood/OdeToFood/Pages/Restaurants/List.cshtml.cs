@@ -15,7 +15,7 @@ namespace OdeToFood
         private readonly IConfiguration _config;
         private readonly IRestaurantData _restaurantData;
         
-        [BindProperty("search", true)]
+        [BindProperty(Name = "search", SupportsGet = true)]
         public string SearchTerm { get; set; }
         public string Message { get; set; }
         public IEnumerable<Restaurant> Restaurants { get; set; }
@@ -29,7 +29,7 @@ namespace OdeToFood
         public void OnGet()
         {
             Message = _config["Message"];
-            Restaurants = string.IsNullOrEmpty(SearchTerm) ? _restaurantData.GetAll() : _restaurantData.GetByName(SearchTerm);
+            Restaurants = string.IsNullOrEmpty(SearchTerm) ? _restaurantData.GetAll() : _restaurantData.FilterByName(SearchTerm);
         }
     }
 }
