@@ -44,9 +44,7 @@ namespace OdeToFood.Data
 
         public Restaurant GetById(int id)
         {
-            return (from r in restaurants
-                where r.Id == id
-                select r).First();
+            return restaurants.First(r => r.Id == id);
         }
     }
 }
