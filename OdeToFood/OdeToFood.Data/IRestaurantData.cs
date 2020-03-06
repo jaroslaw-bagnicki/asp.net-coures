@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using OdeToFood.Core;
@@ -44,7 +45,7 @@ namespace OdeToFood.Data
 
         public Restaurant GetById(int id)
         {
-            return restaurants.First(r => r.Id == id);
+            return restaurants.FirstOrDefault(r => r.Id == id);
         }
     }
 }
