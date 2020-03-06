@@ -4,6 +4,11 @@
     ViewData["Title"] = "Details";
 }
 
+@if (Model.Message != null)
+{
+    <div class="alert alert-success" style="margin-top: 16px">@Model.Message</div>
+}
+
 <h2>@Model.Restaurant.Name</h2>
 
 <div>
