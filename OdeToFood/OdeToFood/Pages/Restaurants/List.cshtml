@@ -20,16 +20,16 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Cuisine</th>
-            <th>Actions</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Cuisine</th>
+        <th>Actions</th>
+    </tr>
     </thead>
     <tbody>
     @foreach (var restaurant in Model.Restaurants)
-        {
+    {
         <tr>
             <td>@restaurant.Name</td>
             <td>@restaurant.Location</td>
@@ -43,8 +43,11 @@
                 </a>
             </td>
         </tr>
-        }
+    }
     </tbody>
 </table>
+<div>
+    <a asp-page="./Edit" class="btn btn-primary">Add New</a>
+</div>
 
 <div>@Model.Message</div>

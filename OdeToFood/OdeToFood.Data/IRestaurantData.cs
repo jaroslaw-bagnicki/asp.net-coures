@@ -11,7 +11,7 @@ namespace OdeToFood.Data
     {
         IEnumerable<Restaurant> GetAll();
         IEnumerable<Restaurant> FilterByName(string term);
-        Restaurant GetById(int id);
+        Restaurant GetById(int? id);
         Restaurant Update(Restaurant restaurant);
         int Commit();
     }
@@ -46,7 +46,7 @@ namespace OdeToFood.Data
                 select r;
         }
 
-        public Restaurant GetById(int id)
+        public Restaurant GetById(int? id)
         {
             return restaurants.FirstOrDefault(r => r.Id == id);
         }

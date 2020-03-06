@@ -17,7 +17,7 @@ namespace OdeToFood
 
         [BindProperty]
         public Restaurant Restaurant { get; set; }
-        public IEnumerable<SelectListItem> CuisineSelectItems { get; set; } 
+        public IEnumerable<SelectListItem> CuisineSelectItems { get; set; }
 
         public EditModel(IRestaurantData restaurantData, IHtmlHelper htmlHelper)
         {
@@ -25,9 +25,9 @@ namespace OdeToFood
             _htmlHelper = htmlHelper;
         }
         
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet(int? id)
         {
-            Restaurant = _restaurantData.GetById(id);
+            Restaurant = id.HasValue ? _restaurantData.GetById(id) : new Restaurant();
 
             if (Restaurant == null)
             {
@@ -52,7 +52,7 @@ namespace OdeToFood
 
             CuisineSelectItems = _htmlHelper.GetEnumSelectList<CuisineType>();
 
-            return Page();
+            return RedirectToPage("./Details", new { id = Restaurant.Id });
         }
     }
 }

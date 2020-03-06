@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page "{id:int?}"
 @using OdeToFood.Core
 @model OdeToFood.EditModel
 @{
@@ -21,6 +21,7 @@
         <span class="text-danger" asp-validation-for="Restaurant.Location"></span>
     </div>
     <div class="form-group">
+        <label asp-for="Restaurant.Cuisine"></label>
         <select class="form-control" asp-for="Restaurant.Cuisine" asp-items="Model.CuisineSelectItems">
         </select>
         <span class="text-danger" asp-validation-for="Restaurant.Cuisine"></span>
