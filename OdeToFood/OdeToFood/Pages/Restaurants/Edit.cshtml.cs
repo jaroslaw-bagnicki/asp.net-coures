@@ -15,6 +15,7 @@ namespace OdeToFood
         private readonly IRestaurantData _restaurantData;
         private readonly IHtmlHelper _htmlHelper;
 
+        public bool EditMode { get; set; }
         [BindProperty]
         public Restaurant Restaurant { get; set; }
         public IEnumerable<SelectListItem> CuisineSelectItems { get; set; }
@@ -27,7 +28,8 @@ namespace OdeToFood
         
         public IActionResult OnGet(int? id)
         {
-            Restaurant = id.HasValue ? _restaurantData.GetById(id) : new Restaurant();
+            EditMode = id.HasValue;
+            Restaurant = EditMode ? _restaurantData.GetById(id) : new Restaurant();
 
             if (Restaurant == null)
             {
@@ -40,17 +42,25 @@ namespace OdeToFood
 
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int? id)
         {
+            EditMode = id.HasValue;
+
             if (!ModelState.IsValid)
             {
+                CuisineSelectItems = _htmlHelper.GetEnumSelectList<CuisineType>();
                 return Page();
             }
 
-            _restaurantData.Update(Restaurant);
+            if (EditMode)
+            {
+                _restaurantData.Update(Restaurant);
+            }
+            else
+            {
+                _restaurantData.Add(Restaurant);
+            }
             _restaurantData.Commit();
-
-            CuisineSelectItems = _htmlHelper.GetEnumSelectList<CuisineType>();
 
             return RedirectToPage("./Details", new { id = Restaurant.Id });
         }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editing @Model.Restaurant.Name</h2>
+<h2>@(Model.EditMode ? $"Editing {Model.Restaurant.Name}" : "Adding")</h2>
 
 <form method="post">
 
