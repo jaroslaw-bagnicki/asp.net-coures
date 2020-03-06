@@ -21,22 +21,28 @@
 <table class="table">
     <thead>
         <tr>
-            <td>Name</td>
-            <td>Location</td>
-            <td>Cuisine</td>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Cuisine</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach (var restaurant in Model.Restaurants)
         {
-            <tr>
-                <td>@restaurant.Name</td>
-                <td>@restaurant.Location</td>
-                <td>@restaurant.Cuisine</td>
-                <td><a class="btn btn-lg" asp-page="./Details" asp-route-id="@restaurant.Id">
+        <tr>
+            <td>@restaurant.Name</td>
+            <td>@restaurant.Location</td>
+            <td>@restaurant.Cuisine</td>
+            <td>
+                <a class="btn btn-lg" asp-page="./Details" asp-route-id="@restaurant.Id">
                     <i class="glyphicon glyphicon-zoom-in"></i>
-                </a></td>
-            </tr>
+                </a>
+                <a class="btn btn-lg" asp-page="./Edit" asp-route-id="@restaurant.Id">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
