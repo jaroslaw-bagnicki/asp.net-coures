@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Sockets;
 using OdeToFood.Core;
@@ -11,6 +12,8 @@ namespace OdeToFood.Data
         IEnumerable<Restaurant> GetAll();
         IEnumerable<Restaurant> FilterByName(string term);
         Restaurant GetById(int id);
+        Restaurant Update(Restaurant restaurant);
+        int Commit();
     }
 
     public class InMemoryRestaurantData : IRestaurantData
@@ -46,6 +49,26 @@ namespace OdeToFood.Data
         public Restaurant GetById(int id)
         {
             return restaurants.FirstOrDefault(r => r.Id == id);
+        }
+
+        public Restaurant Update(Restaurant changedRestaurant)
+        {
+            var restaurant = restaurants.FirstOrDefault(r => r.Id == changedRestaurant.Id);
+            if (restaurant == null)
+            {
+                throw(new Exception("Ups..."));
+            }
+
+            restaurant.Name = changedRestaurant.Name;
+            restaurant.Location = changedRestaurant.Location;
+            restaurant.Cuisine = changedRestaurant.Cuisine;
+
+            return restaurant;
+        }
+
+        public int Commit()
+        {
+            return 0;
         }
     }
 }
