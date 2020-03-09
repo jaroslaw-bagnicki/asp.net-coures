@@ -23,37 +23,10 @@
     </div>
 </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Cuisine</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var restaurant in Model.Restaurants)
-        {
-            <tr>
-                <td>@restaurant.Name</td>
-                <td>@restaurant.Location</td>
-                <td>@restaurant.Cuisine</td>
-                <td>
-                    <a class="btn btn-lg" asp-page="./Details" asp-route-id="@restaurant.Id">
-                        <i class="glyphicon glyphicon-zoom-in"></i>
-                    </a>
-                    <a class="btn btn-lg" asp-page="./Edit" asp-route-id="@restaurant.Id">
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                    <a class="btn btn-lg" asp-page="./Delete" asp-route-id="@restaurant.Id">
-                        <i class="glyphicon glyphicon-trash text-danger"></i>
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var restaurant in Model.Restaurants)
+{
+    <partial name="_Summary" model="restaurant"/>
+}
 <div>
     <a asp-page="./Edit" class="btn btn-primary">Add New</a>
 </div>
