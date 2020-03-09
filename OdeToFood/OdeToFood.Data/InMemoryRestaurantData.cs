@@ -1,23 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net.Sockets;
 using OdeToFood.Core;
 
 namespace OdeToFood.Data
 {
-    public interface IRestaurantData
-    {
-        IEnumerable<Restaurant> GetAll();
-        IEnumerable<Restaurant> FilterByName(string term);
-        Restaurant GetById(int? id);
-        Restaurant Update(Restaurant restaurant);
-        Restaurant Add(Restaurant restaurant);
-        Restaurant Delete(int id);
-        int Commit();
-    }
-
     public class InMemoryRestaurantData : IRestaurantData
     {
         List<Restaurant> restaurants;
@@ -58,7 +45,7 @@ namespace OdeToFood.Data
             var restaurant = restaurants.FirstOrDefault(r => r.Id == changedRestaurant.Id);
             if (restaurant == null)
             {
-                throw(new Exception("Ups..."));
+                throw(new Exception("Ups... Restaurant not found."));
             }
 
             restaurant.Name = changedRestaurant.Name;
@@ -73,6 +60,17 @@ namespace OdeToFood.Data
             newRestaurant.Id = restaurants.Max(r => r.Id) + 1;
             restaurants.Add(newRestaurant);
             return newRestaurant;
+        }
+
+        public Restaurant Delete(int id)
+        {
+            var restaurant = restaurants.FirstOrDefault(r => r.Id == id);
+            if (restaurant == null)
+            {
+                throw (new Exception("Ups... Restaurant not found."));
+            }
+            restaurants.Remove(restaurant); 
+            return restaurant;
         }
 
         public int Commit()
